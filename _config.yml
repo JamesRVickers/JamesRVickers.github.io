@@ -1,38 +1,16 @@
-# ==========================================
-# Site Settings
-# ==========================================
-title: "James Vickers | Portfolio"
-description: "..."
-url: "https://jamesrvickers.github.io/" # Your production URL (no trailing slash)
+title: James — Portfolio
+description: >-
+  Portfolio of James Vickers, a Computer Science student at Victoria University of
+  Wellington
 baseurl: ""
+url: "https://jamesrvickers.github.io/"
 
-# ==========================================
-# Theme and Plugins
-# ==========================================
-theme: minima                      # Uses the default Jekyll theme supported by GitHub Pages
+markdown: kramdown
 plugins:
-  - jekyll-feed                    # Automatically generates an RSS feed
-  - jekyll-seo-tag                 # Optimizes meta tags for search engines (SEO)
-  - jekyll-sitemap                 # Generates a sitemap.xml for Google indexing
+  - jekyll-feed
+  - jekyll-sitemap
 
-# ==========================================
-# Author Information (Often used by themes)
-# ==========================================
-author:
-  name: "James Vickers"
-  email: "james.russell.vickers@gmail.com"
-  github: "JamesRVickers"
-  linkedin: "james-vickers-69b6793b6"
-
-# ==========================================
-# Build & File Exclusions
-# ==========================================
-permalink: /blog/:title/           # Sets clean, descriptive URLs for your blog posts
-markdown: kramdown                 # Default markdown processor for GitHub Pages
 exclude:
-  - Gemfile
-  - Gemfile.lock
-  - node_modules/
-  - vendor/bundle/
-  - .github/
   - README.md
+  - LICENSE
+  - node_modules
