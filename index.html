@@ -3,70 +3,524 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>James</title>
+<title>James — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #ffffff;
-    --text: #111111;
-    --muted: #666666;
-    --accent: #2b2b2b;
+    --bg: #06070a;
+    --panel: rgba(255,255,255,0.03);
+    --panel-border: rgba(255,255,255,0.08);
+    --text: #e8eaf0;
+    --muted: #8b93a4;
+    --cyan: #5fd8ff;
+    --violet: #a78bfa;
+    --heading: 'Space Grotesk', sans-serif;
+    --body-f: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
   *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
   body{
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: system-ui, sans-serif;
-    line-height: 1.6;
+    font-family: var(--body-f);
+    line-height: 1.65;
+    overflow-x: hidden;
   }
-  .wrap{
-    max-width: 640px;
+  .wrap{ max-width: 1100px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+  a{ color: var(--cyan); }
+  h1,h2,h3{ font-family: var(--heading); margin: 0; }
+
+  /* ---------- ambient background blobs (fade transitions) ---------- */
+  .blob{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---------- nav ---------- */
+  nav.topnav{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(6,7,10,0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .topnav-inner{
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 80px 24px;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  h1{
-    font-size: 28px;
-    margin: 0 0 8px;
+  .brand{
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text);
   }
-  p{ margin: 0 0 16px; color: var(--muted); }
-  nav a{
-    color: var(--accent);
+  .brand span{ color: var(--cyan); }
+  .topnav-inner .links a{
+    color: var(--muted);
     text-decoration: none;
-    margin-right: 16px;
+    margin-left: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+  .topnav-inner .links a:hover{ color: var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    padding: 200px 0 160px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid rgba(95,216,255,0.3);
+    border-radius: 100px;
+    background: rgba(95,216,255,0.06);
+    margin-bottom: 28px;
+  }
+  .dot-live{
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+  }
+  .hero h1{
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.08;
+    max-width: 780px;
+  }
+  .hero h1 .grad{
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.sub{
+    margin-top: 24px;
+    max-width: 560px;
+    font-size: 18px;
+    color: var(--muted);
+  }
+  .hero-cta{
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14.5px;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn-primary{
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    color: #060709;
+  }
+  .btn-ghost{
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+    background: var(--panel);
+  }
+
+  /* ---------- section framing ---------- */
+  section{ position: relative; padding: 110px 0; }
+  .section-head h2{ font-size: 40px; }
+  p.subhead{
+    font-family: var(--heading);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--cyan);
+    margin: 10px 0 16px;
+  }
+  .section-head p{ color: var(--muted); max-width: 560px; font-size: 16px; margin: 0 0 50px; }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    max-width: 700px;
+  }
+  .about-grid p{ color: var(--muted); font-size: 16px; margin: 0 0 16px; }
+  .about-grid a{ font-weight: 600; }
+
+  /* ---------- courses ---------- */
+  .courses-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .course-card{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .course-card:hover{ border-color: rgba(95,216,255,0.4); transform: translateY(-3px); }
+  .course-card .code{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--cyan);
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .course-card h3{ font-size: 16px; margin-bottom: 6px; }
+  .course-card p{ font-size: 13.5px; color: var(--muted); margin: 0; }
+
+  /* ---------- projects ---------- */
+  .project-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .project-card{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .project-card::before{
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .project-card:hover{ transform: translateY(-4px); border-color: rgba(167,139,250,0.4); }
+  .project-card:hover::before{ opacity: 1; }
+  .project-card h3{ font-size: 19px; margin-bottom: 10px; }
+  .project-card p{ color: var(--muted); font-size: 14.5px; margin: 0 0 16px; }
+  .project-tags{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    color: var(--violet);
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.25);
+  }
+  .project-card ul{
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .project-card li{ margin-bottom: 6px; }
+  .project-card-media{
+    display: flex;
+    align-items: stretch;
+    gap: 28px;
+    grid-column: 1 / -1;
+  }
+  .project-card-body{ flex: 1 1 auto; min-width: 0; }
+  .project-card-image{ flex: 0 0 220px; }
+  .placeholder-img{
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed var(--panel-border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    text-align: center;
+    padding: 12px;
+  }
+  @media (max-width: 620px){
+    .project-card-media{ flex-direction: column; }
+    .project-card-image{ flex: 0 0 auto; }
+    .placeholder-img{ min-height: 140px; }
+  }
+
+  /* ---------- contact ---------- */
+  .contact-card{
+    text-align: center;
+    font-family: var(--body-f);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .contact-card h2{ font-size: 32px; margin-bottom: 14px; }
+  .contact-card p{ color: var(--muted); margin: 0 0 30px; }
+  .contact-links{
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
     font-size: 14px;
   }
-  nav a:hover{ text-decoration: underline; }
-  section{ margin-top: 48px; }
-  section h2{
-    font-size: 16px;
-    margin: 0 0 8px;
+  .contact-links a{
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    transition: color 0.15s ease;
+  }
+  .contact-links a:hover{ text-decoration: underline; color: var(--violet); }
+  .contact-links svg{
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+  }
+
+  footer{
+    padding: 90px 0 50px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: var(--mono);
+    border-top: 1px solid var(--panel-border);
+  }
+
+  @media (max-width: 760px){
+    .hero h1{ font-size: 40px; }
+    .topnav-inner .links a{ margin-left: 16px; }
+    section{ padding: 70px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .btn:hover, .course-card:hover, .project-card:hover{ transform: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<!-- ambient blobs give the fade-colour transitions between sections instead of a hard wave edge -->
+<div class="blob" style="width:600px;height:600px;top:-100px;left:-150px;background:var(--cyan);"></div>
+<div class="blob" style="width:500px;height:500px;top:650px;right:-120px;background:var(--violet);"></div>
+<div class="blob" style="width:550px;height:550px;top:1500px;left:-100px;background:var(--violet);opacity:0.25;"></div>
+<div class="blob" style="width:600px;height:600px;top:2300px;right:-150px;background:var(--cyan);opacity:0.22;"></div>
+<div class="blob" style="width:500px;height:500px;top:3100px;left:10%;background:var(--violet);opacity:0.2;"></div>
 
-  <header>
-    <h1>James</h1>
-    <p>Computer Science student, Victoria University of Wellington.</p>
-    <nav>
+<nav class="topnav">
+  <div class="topnav-inner">
+    <span class="brand">james<span>.</span>dev</span>
+    <span class="links">
+      <a href="#about">About</a>
+      <a href="#courses">Courses</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
-    </nav>
-  </header>
+    </span>
+  </div>
+</nav>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <p>—</p>
-  </section>
+<section class="hero">
+  <div class="wrap">
+    <h1>Hi, I'm James.</h1>
+    <p class="sub">Computer Science student at Victoria University of Wellington, focused on algorithms, machine learning, and secure software — with a soft spot for building games on the side.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>your.email@example.com</p>
-  </section>
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>About</h2>
+      <p class="subhead">Studying systems, building small ones myself.</p>
+      <p>The short version of what I do and what I'm into right now.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a Computer Science student at Victoria University of Wellington. Coursework spans algorithms and data structures, machine learning, software engineering, and secure programming.</p>
+        <p>Outside of class I build games and small AI tools — partly to practice the ideas from coursework, partly because I enjoy the craft of making something run. See <a href="#projects">my projects</a> below.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-</div>
+<section id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Courses</h2>
+      <p class="subhead">What I'm studying.</p>
+      <p>Coursework I've completed or am currently working through at Victoria University of Wellington.</p>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <span class="code">AIML131</span>
+        <h3>Introduction to AI</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">AIML231</span>
+        <h3>Techniques in Machine Learning</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">COMP102</span>
+        <h3>Intro to Computer Programming Design</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">COMP103</span>
+        <h3>Intro to Data Structures &amp; Algorithms</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">COMP261</span>
+        <h3>Algorithms and Data Structures</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">CYBR171</span>
+        <h3>Cybersecurity Fundamentals</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">CYBR271</span>
+        <h3>Code Security</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">ENGR101</span>
+        <h3>Engineering Technology</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">ENGR110</span>
+        <h3>Engineering Design</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">ENGR201</span>
+        <h3>Engineering in Context</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">MATH161</span>
+        <h3>Discrete Mathematics and Logic</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">MATH177</span>
+        <h3>Probability &amp; Decision Modelling</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">NWEN241</span>
+        <h3>Systems Programming</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">NWEN243</span>
+        <h3>Clouds and Networking</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">SWEN221</span>
+        <h3>Software Development</h3>
+      </div>
+      <div class="course-card">
+        <span class="code">SWEN225</span>
+        <h3>Software Design</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Projects</h2>
+      <p class="subhead">Things I've built.</p>
+      <p>A mix of game systems and applied AI work.</p>
+    </div>
+    <div class="project-grid">
+
+      <div class="project-card project-card-media">
+        <div class="project-card-body">
+          <h3>Skeleton Tracking</h3>
+          <div class="project-tags"><span class="tag">AI</span><span class="tag">Neural Networks</span><span class="tag">Computer Vision</span></div>
+          <p>A limb/skeleton tracking system built around a custom neural net — a for-fun experimentation project rather than a course assignment.</p>
+          <ul>
+            <li>Custom neural network trained to track limb/skeleton positions rather than relying on an off-the-shelf pose model</li>
+            <li>Built as a personal experiment to explore how pose-tracking models work under the hood</li>
+          </ul>
+          <p style="margin-top: 16px;"><a href="https://github.com/jamesRVickers/skeleton-tracking" style="font-family: var(--mono); font-size: 13px;">github.com/jamesRVickers/skeleton-tracking →</a></p>
+        </div>
+        <div class="project-card-image">
+          <div class="placeholder-img">temp image</div>
+        </div>
+      </div>
+
+      <div class="project-card project-card-media project-card-media-left">
+        <div class="project-card-image">
+          <div class="placeholder-img">temp image</div>
+        </div>
+        <div class="project-card-body">
+          <h3>NZ Weather Prediction</h3>
+          <div class="project-tags"><span class="tag">Data Analysis</span><span class="tag">Machine Learning</span></div>
+          <p>Analyzing a decade of New Zealand weather reports to predict future weather from historical year-over-year patterns, rather than from current conditions.</p>
+          <ul>
+            <li>Builds predictions from ~10 years of past NZ weather data</li>
+            <li>Deliberately excludes current weather as an input — forecasts are based on historical patterns alone</li>
+          </ul>
+          <p style="margin-top: 16px;"><a href="https://github.com/jamesRVickers/nz-weather-prediction" style="font-family: var(--mono); font-size: 13px;">github.com/jamesRVickers/nz-weather-prediction →</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <h2>Contact</h2>
+      <p>Open to internships, collaborations, or just talking about code and games.</p>
+      <div class="contact-links">
+        <a href="mailto:james.russell.vickers@gmail.com">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          james.russell.vickers@gmail.com
+        </a>
+        <a href="https://github.com/jamesRVickers">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 3.3 5.4 3.6 5.4 3.6a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 10c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          github.com/jamesRVickers
+        </a>
+        <a href="https://www.linkedin.com/in/james-vickers-69b6793b6/">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-3.7c0-1.5 1-2.3 2.2-2.3 1.2 0 2 .8 2 2.3v3.7"/></svg>
+          linkedin.com/in/james-vickers
+        </a>
+        <a href="https://www.instagram.com/jamesv1ckers">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.7" fill="currentColor" stroke="none"/></svg>
+          @jamesv1ckers
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+</script>
 
 </body>
 </html>
