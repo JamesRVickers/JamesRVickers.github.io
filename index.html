@@ -1,1 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James — Portfolio</title>
+<meta name="description" content="James — CS student at Victoria University of Wellington. Projects in Java, C#/Unity, algorithms, and secure programming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0a08;
+    --panel: #16130f;
+    --panel-line: #322b1f;
+    --amber: #ffb454;
+    --amber-dim: #a8763b;
+    --green: #6fd7a8;
+    --text: #e8e0d0;
+    --muted: #8a8172;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  }
 
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,180,84,0.05), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+
+  a{ color: var(--amber); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- prompt / nav ---------- */
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(11,10,8,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .topbar-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    max-width: 880px;
+    margin: 0 auto;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .prompt-tag{ color: var(--green); }
+  .topbar nav a{
+    color: var(--muted);
+    margin-left: 18px;
+    font-size: 13px;
+  }
+  .topbar nav a:hover{ color: var(--amber); }
+
+  /* ---------- hero / terminal boot ---------- */
+  .hero{
+    padding: 90px 0 60px;
+  }
+  .terminal{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 20px 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+  .terminal-head{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--panel-line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .dot{ width: 10px; height: 10px; border-radius: 50%; background: var(--panel-line); }
+  .terminal-body{
+    padding: 24px 22px 30px;
+    font-family: var(--mono);
+    font-size: 14.5px;
+    min-height: 190px;
+  }
+  .terminal-body .line{ margin: 0 0 6px; white-space: pre-wrap; }
+  .terminal-body .prompt-tag{ color: var(--green); }
+  .terminal-body .out{ color: var(--text); }
+  .terminal-body .out.tagline{ color: var(--amber); font-weight: 600; }
+  .terminal-body .out.dim{ color: var(--muted); }
+  .cursor{
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--amber);
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .hero-links{
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- section framing (panels) ---------- */
+  section{ padding: 46px 0; }
+  section + section{ border-top: 1px solid var(--panel-line); }
+
+  .cmd-label{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .cmd-label .prompt-tag{ color: var(--green); }
+  .cmd-label .arg{ color: var(--amber); }
+
+  h2{
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  h2 .path{ color: var(--amber-dim); }
+
+  p{ margin: 0 0 14px; color: var(--text); }
+  .muted{ color: var(--muted); }
+
+  /* ---------- project listing ---------- */
+  .filelist{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .file-row{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    transition: border-color 0.15s ease;
+  }
+  .file-row:hover{ border-color: var(--amber-dim); }
+  .file-row-head{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--mono);
+    flex-wrap: wrap;
+  }
+  .file-perm{ color: var(--muted); font-size: 12.5px; }
+  .file-name{ color: var(--amber); font-weight: 600; font-size: 15px; }
+  .file-stack{
+    margin-left: auto;
+    color: var(--green);
+    font-size: 12px;
+  }
+  .file-row p{ margin-top: 10px; margin-bottom: 8px; font-family: var(--sans); font-size: 14.5px; }
+  .file-notes{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .file-notes li{ margin-bottom: 4px; }
+  .file-notes{ margin: 8px 0 0; padding-left: 18px; }
+
+  /* ---------- skills ---------- */
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+  }
+  .skill-block{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .skill-block h3{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .skill-block ul{
+    margin: 0;
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .skill-block li{ margin-bottom: 5px; }
+
+  /* ---------- contact ---------- */
+  .contact-panel{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 6px;
+    padding: 22px 24px;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+  .contact-panel .row{ margin-bottom: 8px; }
+  .contact-panel .key{ color: var(--muted); }
+  .contact-panel .val{ color: var(--amber); }
+
+  footer{
+    padding: 30px 0 60px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 560px){
+    .hero{ padding: 60px 0 40px; }
+    .file-stack{ margin-left: 0; }
+    .terminal-body{ font-size: 13px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation: none; }
+    html{ scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span><span class="prompt-tag">james@vuw</span>:~$</span>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="terminal">
+      <div class="terminal-head">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        &nbsp;portfolio.sh
+      </div>
+      <div class="terminal-body" id="bootScreen"></div>
+    </div>
+    <div class="hero-links">
+      <a href="#projects">→ view projects</a>
+      <a href="#contact">→ get in touch</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="cmd-label"><span class="prompt-tag">$</span> cat <span class="arg">about.txt</span></p>
+    <h2>About</h2>
+    <p>I'm James, a Computer Science student at Victoria University of Wellington. My coursework
+    covers algorithms and data structures, machine learning, software engineering, and secure
+    programming — and outside of class I build small games and tools to see those ideas actually
+    run.</p>
+    <p class="muted">Currently working through graph algorithms, threat modelling, and a couple of
+    personal game projects (details below).</p>
+  </section>
+
+  <section id="projects">
+    <p class="cmd-label"><span class="prompt-tag">$</span> ls <span class="arg">./projects</span></p>
+    <h2>Projects</h2>
+
+    <div class="filelist">
+
+      <div class="file-row">
+        <div class="file-row-head">
+          <span class="file-perm">-rwxr-xr-x</span>
+          <span class="file-name">cluedo-game/</span>
+          <span class="file-stack">Java</span>
+        </div>
+        <p>A console implementation of Cluedo, built from the ground up — board and estate
+        modelling, card system (estate / weapon / player cards), and guess logic.</p>
+        <ul class="file-notes">
+          <li>Designed an ASCII console UI: map panel, player/estate/weapon info panel, card
+          display, and a command input area (see / move / guess)</li>
+          <li>Step-by-step movement — WASD per move, dice roll of 1–6, with a per-turn trail
+          that blocks backtracking onto tiles already stepped on that turn</li>
+        </ul>
+      </div>
+
+      <div class="file-row">
+        <div class="file-row-head">
+          <span class="file-perm">-rwxr-xr-x</span>
+          <span class="file-name">tower-defense/</span>
+          <span class="file-stack">Unity · C#</span>
+        </div>
+        <p>A 2D tower defense game built in Unity, focused on getting the underlying combat
+        systems solid before layering on content.</p>
+        <ul class="file-notes">
+          <li>Debuff and speed-recalculation architecture for enemy units</li>
+          <li>Coroutine-based tower attack cooldowns, with targeting logic and projectile
+          gizmo rendering</li>
+          <li>Fixed a URP sprite-sorting issue (Y-axis depth ordering) via the Renderer2D
+          Data asset's Transparency Sort settings</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="cmd-label"><span class="prompt-tag">$</span> cat <span class="arg">skills.txt</span></p>
+    <h2>Skills &amp; coursework</h2>
+
+    <div class="skills-grid">
+      <div class="skill-block">
+        <h3>Languages</h3>
+        <ul>
+          <li>Java</li>
+          <li>C#</li>
+          <li>Python</li>
+        </ul>
+      </div>
+      <div class="skill-block">
+        <h3>Tools &amp; platforms</h3>
+        <ul>
+          <li>Unity (2D)</li>
+          <li>JavaFX</li>
+          <li>Git</li>
+        </ul>
+      </div>
+      <div class="skill-block">
+        <h3>Coursework</h3>
+        <ul>
+          <li>Algorithms &amp; data structures</li>
+          <li>Machine learning</li>
+          <li>Secure programming</li>
+          <li>Software engineering</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="cmd-label"><span class="prompt-tag">$</span> ./contact.sh</p>
+    <h2>Get in touch</h2>
+    <div class="contact-panel">
+      <div class="row"><span class="key">email</span>&nbsp;&nbsp;&nbsp;<span class="val">your.email@example.com</span></div>
+      <div class="row"><span class="key">github</span>&nbsp;&nbsp;<span class="val"><a href="https://github.com/your-username">github.com/your-username</a></span></div>
+      <div class="row"><span class="key">linkedin</span><span class="val"><a href="https://linkedin.com/in/your-profile">linkedin.com/in/your-profile</a></span></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> James — built with plain HTML/CSS/JS</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Terminal boot sequence
+  const bootLines = [
+    { type: 'cmd', text: 'whoami' },
+    { type: 'out', text: 'James — CS student, Victoria University of Wellington', cls: 'tagline' },
+    { type: 'cmd', text: 'echo $INTERESTS' },
+    { type: 'out', text: 'algorithms · machine learning · secure programming · game dev', cls: 'dim' },
+  ];
+
+  const el = document.getElementById('bootScreen');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderStatic(){
+    el.innerHTML = bootLines.map(l => {
+      if (l.type === 'cmd') {
+        return `<p class="line"><span class="prompt-tag">james@vuw</span>:~$ ${l.text}</p>`;
+      }
+      return `<p class="line out ${l.cls || ''}">${l.text}</p>`;
+    }).join('') + '<p class="line"><span class="prompt-tag">james@vuw</span>:~$ <span class="cursor"></span></p>';
+  }
+
+  if (reduceMotion) {
+    renderStatic();
+  } else {
+    let html = '';
+    let li = 0;
+
+    function typeLine(){
+      if (li >= bootLines.length) {
+        html += `<p class="line"><span class="prompt-tag">james@vuw</span>:~$ <span class="cursor"></span></p>`;
+        el.innerHTML = html;
+        return;
+      }
+      const l = bootLines[li];
+      if (l.type === 'cmd') {
+        const prefix = `<span class="prompt-tag">james@vuw</span>:~$ `;
+        let i = 0;
+        const chars = l.text.split('');
+        function typeChar(){
+          if (i <= chars.length) {
+            el.innerHTML = html + `<p class="line">${prefix}${chars.slice(0, i).join('')}<span class="cursor"></span></p>`;
+            i++;
+            setTimeout(typeChar, 28);
+          } else {
+            html += `<p class="line">${prefix}${l.text}</p>`;
+            li++;
+            setTimeout(typeLine, 150);
+          }
+        }
+        typeChar();
+      } else {
+        html += `<p class="line out ${l.cls || ''}">${l.text}</p>`;
+        li++;
+        el.innerHTML = html;
+        setTimeout(typeLine, 220);
+      }
+    }
+    typeLine();
+  }
+</script>
+
+</body>
+</html>
