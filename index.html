@@ -65,7 +65,18 @@
 
   .tri-group-incomplete{ margin-bottom:32px; }
   .tri-group-incomplete:last-child{ margin-bottom:0; }
-  .tri-group-incomplete h4{ font-family:var(--sans); font-weight:500; font-size:14px; color:var(--muted); margin:0 0 12px; }
+  .tri-group-incomplete h4{ font-family:var(--sans); font-weight:500; font-size:14px; color:var(--muted); margin:0 0 12px; display:flex; align-items:center; }
+
+  .planned-banner{ display:flex; align-items:flex-start; gap:12px; padding:14px 18px; margin-bottom:28px; border:1px dashed var(--line); border-radius:8px; background:var(--surface); color:var(--muted); font-size:13.5px; line-height:1.5; }
+  .planned-banner svg{ width:18px; height:18px; flex:0 0 18px; margin-top:1px; stroke:var(--muted); fill:none; }
+  .planned-banner strong{ color:var(--ink); font-weight:600; }
+
+  .badge-planned{ display:inline-block; margin-left:9px; font-family:var(--mono); font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:var(--bg); }
+
+  .tri-group-incomplete .courses-grid{ border:1px dashed var(--line); border-radius:6px; padding:2px 14px; }
+  .tri-group-incomplete .course-row{ opacity:.7; border-bottom-style:dashed; }
+  .tri-group-incomplete .course-row h3{ color:var(--muted); font-style:italic; }
+  .tri-group-incomplete .course-row .code{ color:var(--muted); }
 
 
   .courses-grid{ display:grid; grid-template-columns:1fr 1fr; column-gap:40px; }
@@ -142,14 +153,13 @@
 
 <section id="about">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head" style="margin-bottom:12px;">
       <h2>About</h2>
-      <p>The short version of what I do and what I'm into right now.</p>
     </div>
     <div class="about-grid">
       <p>
         My name is James, I am currently 19 years old and working for my software engineering degree
-        at Victoria university of Wellington in New Zealand. 
+        at Victoria University of Wellington in New Zealand. 
       </p>
       <p>See <a href="#projects">my projects</a> below.</p>
     </div>
@@ -165,12 +175,14 @@
         I'm willing to share my grades! Send me a message asking and I'll send you my individual letter grades.
       </p>
     </div>
-    <div class="year-tabs">
-      <button class="year-tab active" data-year="1">Year 1</button>
-      <button class="year-tab" data-year="2">Year 2</button>
+    <div class="year-tabs" role="tablist" aria-label="Course level">
+      <button class="year-tab active" data-year="1" role="tab" aria-selected="true" aria-controls="year-content-1">100s</button>
+      <button class="year-tab" data-year="2" role="tab" aria-selected="false" aria-controls="year-content-2">200s</button>
+      <button class="year-tab" data-year="3" role="tab" aria-selected="false" aria-controls="year-content-3">300s</button>
+      <button class="year-tab" data-year="4" role="tab" aria-selected="false" aria-controls="year-content-4">400s</button>
     </div>
 
-    <div class="year-content" data-year-content="1">
+    <div class="year-content" id="year-content-1" data-year-content="1">
       <div class="tri-group">
         <h4>Trimester 1</h4>
         <div class="courses-grid">
@@ -191,7 +203,7 @@
       </div>
     </div>
 
-    <div class="year-content" data-year-content="2" hidden>
+    <div class="year-content" id="year-content-2" data-year-content="2" hidden>
       <div class="tri-group">
         <h4>Trimester 1</h4>
         <div class="courses-grid">
@@ -212,44 +224,52 @@
       </div>
     </div>
 
-    <div class="year-content" data-year-content="3" hidden>
+    <div class="year-content" id="year-content-3" data-year-content="3" hidden>
+      <div class="planned-banner">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <span><strong>Not yet completed.</strong> These are the courses I'm planning to take. Codes may still change before enrolment.</span>
+      </div>
       <div class="tri-group-incomplete">
-        <h4>Trimester 1</h4>
+        <h4>Trimester 1 <span class="badge-planned">Planned</span></h4>
         <div class="courses-grid">
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">ENGR301</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">SWEN326</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">SWEN303</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">AIML3XX</span><h3>TBC</h3></div>
         </div>
       </div>
-      <div class="tri-group">
-        <h4>Trimester 2</h4>
+      <div class="tri-group-incomplete">
+        <h4>Trimester 2 <span class="badge-planned">Planned</span></h4>
         <div class="courses-grid">
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">ENGR302</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">SWEN301</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">CGRA151</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">AIML232</span><h3>TBC</h3></div>
         </div>
       </div>
     </div>
 
-    <div class="year-content" data-year-content="4" hidden>
+    <div class="year-content" id="year-content-4" data-year-content="4" hidden>
+      <div class="planned-banner">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <span><strong>Not yet completed.</strong> These are the courses I'm planning to take. Codes may still change before enrolment.</span>
+      </div>
       <div class="tri-group-incomplete">
-        <h4>Trimester 1</h4>
+        <h4>Trimester 1 <span class="badge-planned">Planned</span></h4>
         <div class="courses-grid">
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">ENGR401</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">ENGR489</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">ENGR489</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">AIML4XX</span><h3>TBC</h3></div>
         </div>
       </div>
-      <div class="tri-group">
-        <h4>Trimester 2</h4>
+      <div class="tri-group-incomplete">
+        <h4>Trimester 2 <span class="badge-planned">Planned</span></h4>
         <div class="courses-grid">
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
-          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">SWEN4xx</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">SWEN4xx</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">4XX</span><h3>TBC</h3></div>
+          <div class="course-row"><span class="code">3xx</span><h3>TBC</h3></div>
         </div>
       </div>
     </div>
@@ -268,31 +288,11 @@
         <div class="project-card-body">
           <h3>Skeleton Tracking</h3>
           <div class="project-tags"><span class="tag">AI</span><span class="tag">Neural Networks</span><span class="tag">Computer Vision</span></div>
-          <p>p1</p>
-          <ul>
-            <li>li1</li>
-            <li>li2</li>
-          </ul>
+          <p>A heavyweight training pipeline for a DNN, with a lightweight model framework - All self designed. Training data used was self made.</p>
           <a class="repo-link" href="https://github.com/jamesRVickers/...">github.com/jamesRVickers/...</a>
         </div>
         <div class="project-card-image">
           <div class="placeholder-img">temp image</div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-card-image">
-          <div class="placeholder-img">temp image</div>
-        </div>
-        <div class="project-card-body">
-          <h3> - project 2 - </h3>
-          <div class="project-tags"><span class="tag">tag1</span><span class="tag">tag2</span></div>
-          <p>p1</p>
-          <ul>
-            <li>li1</li>
-            <li>li2</li>
-          </ul>
-          <a class="repo-link" href="https://github.com/jamesRVickers/...">github.com/jamesRVickers/...</a>
         </div>
       </div>
 
@@ -331,8 +331,12 @@
   const yearTabs = document.querySelectorAll('.year-tab');
   yearTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      yearTabs.forEach(t => t.classList.remove('active'));
+      yearTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
       document.querySelectorAll('.year-content').forEach(c => {
         c.hidden = c.dataset.yearContent !== tab.dataset.year;
       });
