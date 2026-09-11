@@ -63,6 +63,11 @@
   .tri-group:last-child{ margin-bottom:0; }
   .tri-group h4{ font-family:var(--sans); font-weight:500; font-size:14px; color:var(--ink); margin:0 0 12px; }
 
+  .tri-group-incomplete{ margin-bottom:32px; }
+  .tri-group-incomplete:last-child{ margin-bottom:0; }
+  .tri-group-incomplete h4{ font-family:var(--sans); font-weight:500; font-size:14px; color:var(--muted); margin:0 0 12px; }
+
+
   .courses-grid{ display:grid; grid-template-columns:1fr 1fr; column-gap:40px; }
   .course-row{ display:flex; gap:14px; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--line); }
   .course-row .code{ font-family:var(--mono); font-size:12px; color:var(--muted); flex:0 0 70px; }
@@ -142,8 +147,11 @@
       <p>The short version of what I do and what I'm into right now.</p>
     </div>
     <div class="about-grid">
-      <p>... p1</p>
-      <p>... p2 See <a href="#projects">my projects</a> below.</p>
+      <p>
+        My name is James, I am currently 19 years old and working for my software engineering degree <br>
+        at Victoria university of Wellington in New Zealand. 
+      </p>
+      <p>See <a href="#projects">my projects</a> below.</p>
     </div>
   </div>
 </section>
@@ -152,7 +160,10 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Courses</h2>
-      <p>Coursework I've completed or am currently working through at Victoria University of Wellington.</p>
+      <p>
+        Coursework I've completed or am currently working through at Victoria University of Wellington. <br>
+        I'm willing to share my grades! Send me a message asking and I'll send you my individual letter grades.
+      </p>
     </div>
     <div class="year-tabs">
       <button class="year-tab active" data-year="1">Year 1</button>
@@ -197,6 +208,48 @@
           <div class="course-row"><span class="code">CYBR271</span><h3>Code Security</h3></div>
           <div class="course-row"><span class="code">NWEN243</span><h3>Clouds and Networking</h3></div>
           <div class="course-row"><span class="code">ENGR201</span><h3>Engineering in Context</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="year-content" data-year-content="3" hidden>
+      <div class="tri-group-incomplete">
+        <h4>Trimester 1</h4>
+        <div class="courses-grid">
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+        </div>
+      </div>
+      <div class="tri-group">
+        <h4>Trimester 2</h4>
+        <div class="courses-grid">
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="year-content" data-year-content="4" hidden>
+      <div class="tri-group-incomplete">
+        <h4>Trimester 1</h4>
+        <div class="courses-grid">
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+        </div>
+      </div>
+      <div class="tri-group">
+        <h4>Trimester 2</h4>
+        <div class="courses-grid">
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
+          <div class="course-row"><span class="code">x</span><h3>...</h3></div>
         </div>
       </div>
     </div>
